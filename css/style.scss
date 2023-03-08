@@ -1,0 +1,63 @@
+function moveBullet() {
+    if (bullet) {
+        var bulletTop=parseInt(bullet.style.top);
+        if (bulletTop > 0) {
+            bullet.style.top=bulletTop - 10+"px";
+            checkCollision();
+        }
+        else {
+            game.removeChild(bullet);
+            bullet=null;
+        }
+    }
+}
+
+document.onkeydown=function(e) {
+    if (e.keyCode===32) {
+        // spacebar
+        e.preventDefault();
+        if (!bullet) {
+            bullet=document.createElement("div");
+            bullet.classList.add("bullet");
+            bullet.style.left=player.style.left;
+            game.appendChild(bullet);
+        }
+    }
+}
+
+;
+function checkCollision() {
+    for (var i=0;
+    i < obstacles.length;
+    i++) {
+        var obstacle=obstacles[i];
+        var bulletRect=bullet.getBoundingClientRect();
+        var obstacleRect=obstacle.getBoundingClientRect();
+        if ( bulletRect.top < obstacleRect.bottom && bulletRect.right > obstacleRect.left && bulletRect.left < obstacleRect.right && bulletRect.bottom > obstacleRect.top) {
+            game.removeChild(obstacle);
+            obstacles.splice(i, 1);
+            game.removeChild(bullet);
+            bullet=null;
+            break;
+        }
+    }
+}
+
+function checkCollision() {
+    for (var i=0;
+    i < obstacles.length;
+    i++) {
+        var obstacle=obstacles[i];
+        var bulletRect=bullet.getBoundingClientRect();
+        var obstacleRect=obstacle.getBoundingClientRect();
+        if ( bulletRect.top < obstacleRect.bottom && bulletRect.right > obstacleRect.left && bulletRect.left < obstacleRect.right && bulletRect.bottom > obstacleRect.top) {
+            game.removeChild(obstacle);
+            obstacles.splice(i, 1);
+            game.removeChild(bullet);
+            bullet=null;
+            score++;
+            updateScore();
+            break;
+        }
+    }
+}
